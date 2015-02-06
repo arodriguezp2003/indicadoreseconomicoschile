@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="servicio">
+<head>
+	<meta charset="UTF-8">
+	<title>Consumir la Api Rest</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+</head>
+<body>
+	
+	<div class="container" ng-controller="IndicadoresController">
+	<h1>Indicadores Economicos en Chile <small>Version 1.0</small></h1>
+			
+		<div class="col-md-12">
+			<div class="form-group">
+				<label>Ingrese Moneda CLP</label>
+		<input class="form-control"
+		ng-model="txtPeso" type="text" placeholder="Ingrese Moneda CLP">
+
+			</div>
+			<div class="form-group">
+				<button class="btn btn-success form-control"ng-click="Calcular()">Calcular</button>
+			</div>
+		</div>
+
+		
+
+		<table role="table" class="table" >
+			<thead>
+				<tr>
+					<td>{{nombre}}</td>
+					<td>{{valor}}</td>
+					<td>Conversion</td>
+				</tr>
+				<tr ng-repeat="p in indicadores">
+					<td>{{p.name}}</td>
+					<td>{{p.value}}</td>
+					<td>{{p.conversion}}</td>
+
+				</tr>
+			</thead>
+		</table>
+	</div>
+
+
+
+
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.12/angular.min.js"></script>
+	<script>
+	var app = angular.module("servicio",[]);
+
+	app.controller('IndicadoresController', ['$scope','$http', 
+		function($scope, $http){
+		
+		$scope.nombre = "Nombre del Campo";
+		$scope.valor = "Valor del Campo"
+
+		$scope.indicadores = [];
+
+		$http.get('http://127.0.0.1:5000/').success(function(data){
+			$scope.indicadores = data;
+		})
+
+		$scope.Calcular = function() {
+			var peso = $scope.txtPeso;
+
+			angular.forEach($scope.indicadores,function(item,index){
+				if (item.name =="Dolar Observado ") {
+					item.conversion = peso / parseInt(item.value) ;
+				}
+							
+			})
+
+		}
+	}])
+
+
+	</script>
+</body>
+</html>

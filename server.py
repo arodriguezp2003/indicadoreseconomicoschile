@@ -8,15 +8,17 @@ import json
 class Spy():
 	def callback(self):
 		print "Scraping Banco Central"
-		of = open('domain.text', 'w')
 		url = 'http://si3.bcentral.cl/indicadoresvalores/secure/indicadoresvalores.aspx'
 
 		page = urllib2.urlopen(url)
-
+        
 		soup = BeautifulSoup(page)
+		
 		u = soup.findAll("table")[0].findAll("tr")
-
+		
+		
 		listado = []
+
 
 		for d  in u:
 			key =  d.findAll("td", { "class" : "Desc" })
@@ -24,18 +26,17 @@ class Spy():
 
 
 			key =  key[0].find("span").text.encode("utf-8")
+			
 			key = key.replace("\xc3\x83\xc2\xb3","o")
 			key = key.replace("Observado","Observado ")
 
-
 			value =  value[0].find("span").text.encode("utf-8")
+
 			listado.append({"name": key, "value": value})
 			
+			
 		return listado
-
-
-
-
+	
 
 
 from flask import Flask
@@ -44,13 +45,12 @@ from flask.ext import restful
 app = Flask(__name__)
 api = restful.Api(app)
 
-class IndicadorREST(restful.Resource):
+class HelloWorld(restful.Resource):
     def get(self):
-         
     	s = Spy()
-        return s.callback()
+        return s.callback(),201, {'Access-Control-Allow-Origin': '*'} 
 
-api.add_resource(IndicadorREST, '/')
+api.add_resource(HelloWorld, '/')
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(debug=True)
