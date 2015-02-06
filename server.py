@@ -28,7 +28,8 @@ class Spy():
 			key =  key[0].find("span").text.encode("utf-8")
 			
 			key = key.replace("\xc3\x83\xc2\xb3","o")
-			key = key.replace("Observado","Observado ")
+			key = key.replace("Observado","")
+		
 
 			value =  value[0].find("span").text.encode("utf-8")
 
