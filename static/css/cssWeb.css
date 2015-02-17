@@ -20,19 +20,38 @@ color: #000;
 font-family: 'Lato', sans-serif;
 
 }
-* {
+*,html {
 		font-family: 'Open Sans', sans-serif;
+		
 }
-.panelx 
+
+body {
+	background-color: rgb(236, 246, 255);
+}
+
+
+.panelx2 
 {
-	
-	margin-bottom: 20px;
+	color: #FFF;
+	margin-bottom: 100px;
 	padding-bottom: 10px;
 	background-color: rgba(0, 0, 0, 0.6);
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
 }
+
+.panelx 
+{
+	color: #FFF;
+	margin-bottom: 20px;
+	padding-bottom: 10px;
+	background-color: rgba(0, 10, 26, 1);
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+
 .name-panelx {
 	-webkit-border-top-left-radius: 10px;
 	-webkit-border-top-right-radius: 10px;
@@ -40,7 +59,8 @@ font-family: 'Lato', sans-serif;
 	-moz-border-radius-topright: 10px;
 	border-top-left-radius: 10px;
 	border-top-right-radius: 10px;
-	background-color: rgba(51, 122, 183, 0.6);
+	background-color: rgba(51, 122, 183, 1);
+	font-weight: 800;
 	padding-top: 1px;
 	padding-bottom: 1px;
 }

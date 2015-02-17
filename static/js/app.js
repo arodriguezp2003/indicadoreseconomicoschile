@@ -1,4 +1,4 @@
-var app = angular.module("servicio",[]);
+var app = angular.module('servicio',['monedachile']);
 
 	app.controller('IndicadoresController', ['$scope','$http', 
 		function($scope, $http){
@@ -8,7 +8,7 @@ var app = angular.module("servicio",[]);
 
 		$scope.indicadores = [];
 
-		$http.get('http://127.0.0.1:5000/').success(function(data){
+		$http.get('/api').success(function(data){
 			$scope.indicadores = data;
 
 			$scope.indicadores.splice(-1,4);
@@ -16,12 +16,12 @@ var app = angular.module("servicio",[]);
 
 		})
 
-		$scope.Calcular = function() {
+		$scope.Calcular1 = function() {
 			var peso = $scope.txtPeso;
 
 			angular.forEach($scope.indicadores,function(item,index){
-				if (item.name =="Dolar Observado ") {
-					item.conversion = peso / parseInt(item.value) ;
+				if (item.name =="Dolar") {
+					
 				}
 							
 			})

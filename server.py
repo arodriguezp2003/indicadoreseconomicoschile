@@ -29,9 +29,18 @@ class Spy():
 			
 			key = key.replace("\xc3\x83\xc2\xb3","o")
 			key = key.replace("Observado","")
-		
+			
+			if "("  in key:
+				key ="UTM"
+
+			key = key.strip()
 
 			value =  value[0].find("span").text.encode("utf-8")
+
+			value = value.split(',')[0]
+
+			value = value.replace(".",",")
+
 
 			listado.append({"name": key, "value": value})
 			
@@ -40,18 +49,28 @@ class Spy():
 	
 
 
-from flask import Flask
+from flask import Flask , render_template
 from flask.ext import restful
 
-app = Flask(__name__)
+app = Flask(__name__,static_url_path='')
 api = restful.Api(app)
 
-class HelloWorld(restful.Resource):
+class restFull(restful.Resource):
     def get(self):
     	s = Spy()
         return s.callback(),201, {'Access-Control-Allow-Origin': '*'} 
 
-api.add_resource(HelloWorld, '/')
+
+
+@app.route('/')
+def index():
+	return render_template('index.html')
+
+
+api.add_resource(restFull, '/api')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+	app.debug = True
+	print "Debug mode on"
+	app.run(host='0.0.0.0', port=3000)
+
